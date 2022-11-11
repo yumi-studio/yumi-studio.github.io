@@ -1,0 +1,357 @@
+<div class="container-fluid">
+    <div class="heart-wrapper">
+        <div class="heart-front heart-front-beat">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z"/>
+            </svg>
+        </div>
+        <div class="heart-front heart-front-outline">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M17.516 3c2.382 0 4.487 1.564 4.487 4.712 0 4.963-6.528 8.297-10.003 11.935-3.475-3.638-10.002-6.971-10.002-11.934 0-3.055 2.008-4.713 4.487-4.713 3.18 0 4.846 3.644 5.515 5.312.667-1.666 2.333-5.312 5.516-5.312zm0-2c-2.174 0-4.346 1.062-5.516 3.419-1.17-2.357-3.342-3.419-5.515-3.419-3.403 0-6.484 2.39-6.484 6.689 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-4.586-3.414-6.689-6.484-6.689z"/>
+            </svg>
+        </div>
+        <div class="heart-front heart-front-outline-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M17.516 3c2.382 0 4.487 1.564 4.487 4.712 0 4.963-6.528 8.297-10.003 11.935-3.475-3.638-10.002-6.971-10.002-11.934 0-3.055 2.008-4.713 4.487-4.713 3.18 0 4.846 3.644 5.515 5.312.667-1.666 2.333-5.312 5.516-5.312zm0-2c-2.174 0-4.346 1.062-5.516 3.419-1.17-2.357-3.342-3.419-5.515-3.419-3.403 0-6.484 2.39-6.484 6.689 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-4.586-3.414-6.689-6.484-6.689z"/>
+            </svg>
+        </div>
+        <div class="heart-particles heart-particles-beat">
+
+        </div>
+        <div class="heart-bg">
+
+        </div>
+    </div>
+    <div class="dashboard">
+        <div class="heart-options">
+
+        </div>
+        <div style="display: none">
+            <label for="heart-count">No. Heart</label><input id="heart-count" name="heart-count" type="text" disabled>
+        </div>
+    </div>
+</div>
+<style>
+  body {
+    --heart-size: 15px;
+    --heart-front-rotate: 0deg;
+    background: black;
+    margin: 0;
+    padding: 0;
+  }
+
+  [purpose='page-wrap'] {
+    padding: 0;
+  }
+
+  .navbar {
+    display: none !important;
+  }
+
+  .heart-wrapper {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .heart-front {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: auto;
+    z-index: 3;
+    filter: drop-shadow(0px 0px 30px hotpink);
+    animation: heart-front-beat-2 .3s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+
+  .heart-front svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .heart-front-outline {
+    transform-origin: center;
+    animation: heart-outline-fade ease-out 0.6s infinite forwards;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    fill: hotpink;
+    z-index: 1;
+  }
+
+  @keyframes heart-outline-fade {
+    to {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.8);
+    }
+  }
+
+  .heart-front-outline-2 {
+    transform-origin: center;
+    animation: heart-outline-fade-2 ease-out 0.6s infinite forwards;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    fill: rgba(255, 105, 180, 0.5);
+    z-index: 1;
+  }
+
+  @keyframes heart-outline-fade-2 {
+    to {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(2);
+    }
+  }
+
+  .heart-particles {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(calc((var(--heart-size) / -2)), calc(var(--heart-size) / -2));
+    fill: hotpink;
+    z-index: 1;
+    animation: heart-particles-beat .3s infinite alternate;
+    transform-origin: center;
+  }
+
+  @keyframes heart-front-beat {
+    0% {
+      transform: translate(-50%, -50%) rotate(30deg) scale(1.4);
+    }
+    50% {
+      transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(-30deg) scale(1.4);
+    }
+  }
+
+  @keyframes heart-front-beat-2 {
+    to {
+      transform: translate(-50%, -50%) rotate(0) scale(1.4);
+    }
+  }
+
+  @keyframes heart-particles-beat {
+    to {
+      transform: translate(calc((var(--heart-size) / -2)), calc(var(--heart-size) / -2)) scale(1.2);
+    }
+  }
+
+  .small-heart {
+    --offset: 0;
+    --angle: 0;
+    --rotate: 0;
+    --duration: 0;
+    --scale: 1;
+    width: var(--heart-size);
+    height: var(--heart-size);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    animation-name: heart-fade;
+    animation-duration: var(--duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    transform-origin: center;
+
+    opacity: 1;
+    transform: rotate(var(--angle)) translate(0, 0) scale(var(--scale)) rotate(0);
+  }
+
+  .small-heart svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes heart-fade {
+    to {
+      opacity: 0;
+      transform: rotate(var(--angle)) translate(0, var(--offset)) scale(var(--scale)) rotate(var(--rotate));
+    }
+  }
+
+  .heart-bg {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: 0 0 60px 30px #fff,
+    0 0 480px 50px deeppink;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .dashboard {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 100%);
+    transition: ease 0.25s;
+    padding: 15px;
+  }
+
+  .dashboard.active {
+    transform: translate(-50%, 0);
+  }
+
+  .dashboard input {
+    width: 50px;
+    margin-left: 15px;
+  }
+
+  .heart-options {
+    display: inline-flex;
+  }
+
+  .heart-option {
+    display: flex;
+    padding: 5px 10px;
+    fill: white;
+    width: auto;
+    height: auto;
+  }
+
+  .heart-option svg {
+    height: 40px;
+    width: auto;
+  }
+
+  .heart-option.active {
+    fill: hotpink;
+  }
+</style>
+<script type="text/javascript">
+  const HeartApp = {
+    hearts: new Map(),
+    heartTpl: [
+      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z"/></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.516 3c2.382 0 4.487 1.564 4.487 4.712 0 4.963-6.528 8.297-10.003 11.935-3.475-3.638-10.002-6.971-10.002-11.934 0-3.055 2.008-4.713 4.487-4.713 3.18 0 4.846 3.644 5.515 5.312.667-1.666 2.333-5.312 5.516-5.312zm0-2c-2.174 0-4.346 1.062-5.516 3.419-1.17-2.357-3.342-3.419-5.515-3.419-3.403 0-6.484 2.39-6.484 6.689 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-4.586-3.414-6.689-6.484-6.689z"/></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M17.867 3.493l4.133 3.444v5.127l-10 8.333-10-8.334v-5.126l4.133-3.444 5.867 3.911 5.867-3.911zm.133-2.493l-6 4-6-4-6 5v7l12 10 12-10v-7l-6-5z"/></svg>`,
+      `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z"/></svg>`,
+      `<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.322 2.923c.126-.259.39-.423.678-.423.289 0 .552.164.678.423.974 1.998 2.65 5.44 2.65 5.44s3.811.524 6.022.829c.403.055.65.396.65.747 0 .19-.072.383-.231.536-1.61 1.538-4.382 4.191-4.382 4.191s.677 3.767 1.069 5.952c.083.462-.275.882-.742.882-.122 0-.244-.029-.355-.089-1.968-1.048-5.359-2.851-5.359-2.851s-3.391 1.803-5.359 2.851c-.111.06-.234.089-.356.089-.465 0-.825-.421-.741-.882.393-2.185 1.07-5.952 1.07-5.952s-2.773-2.653-4.382-4.191c-.16-.153-.232-.346-.232-.535 0-.352.249-.694.651-.748 2.211-.305 6.021-.829 6.021-.829s1.677-3.442 2.65-5.44zm.678 2.033-2.361 4.792-5.246.719 3.848 3.643-.948 5.255 4.707-2.505 4.707 2.505-.951-5.236 3.851-3.662-5.314-.756z" fill-rule="nonzero"/></svg>`,
+      `<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.262 2.306c.196-.196.461-.306.738-.306s.542.11.738.306c1.917 1.917 7.039 7.039 8.956 8.956.196.196.306.461.306.738s-.11.542-.306.738c-1.917 1.917-7.039 7.039-8.956 8.956-.196.196-.461.306-.738.306s-.542-.11-.738-.306c-1.917-1.917-7.039-7.039-8.956-8.956-.196-.196-.306-.461-.306-.738s.11-.542.306-.738c1.917-1.917 7.039-7.039 8.956-8.956zm-7.573 9.694 8.311 8.311 8.311-8.311-8.311-8.311z" fill-rule="nonzero"/></svg>`,
+    ],
+    allowHeartList: [],
+    spawnRate: 100,
+    spawnCounter: 0,
+    basicSize: 0,
+    heartLifetime: {
+      min: 4,
+      max: 6
+    },
+    init: function () {
+      const self = this;
+      const screenW = window.innerWidth;
+      const screenH = window.innerHeight;
+      self.basicSize = screenW > screenH ? screenH : screenW;
+      const heartFrontSize = Math.floor(self.basicSize * 0.3333333);
+      document.querySelector('.heart-front').style.width = heartFrontSize + "px";
+      document.querySelector('.heart-front-outline').style.width = heartFrontSize + "px";
+      document.querySelector('.heart-front-outline-2').style.width = heartFrontSize + "px";
+      document.querySelector('.heart-bg').style.width = (heartFrontSize / 2) + "px";
+      document.querySelector('.heart-bg').style.height = (heartFrontSize / 2) + "px";
+      document.querySelector('.heart-front').addEventListener('click', function (e) {
+        document.querySelector('.dashboard').classList.toggle('active');
+      });
+      self.live();
+      self.initDashboard();
+      self.refreshDashboard();
+    },
+    initDashboard: function () {
+      const self = this;
+      self.heartTpl.forEach(function (value, index) {
+        let ele = document.createElement('div');
+        ele.classList.add('heart-option');
+        ele.innerHTML = value;
+        ele.addEventListener('click', function (e) {
+          let found = self.allowHeartList.indexOf(index);
+          if (found > -1) {
+            self.allowHeartList.splice(found, 1);
+            ele.classList.remove('active');
+          } else {
+            self.allowHeartList.push(index);
+            ele.classList.add('active');
+          }
+          console.log(index);
+        })
+        document.querySelector('.heart-options').append(ele);
+      });
+    },
+    live: function () {
+      const self = this;
+      setTimeout(function () {
+        if (self.spawnCounter === Math.floor(1000 / self.spawnRate)) {
+          if (self.allowHeartList.length > 0) {
+            self.spawnHeart();
+          }
+          self.spawnCounter = 0;
+        } else {
+          self.spawnCounter += 10;
+        }
+        self.live();
+      }, 10);
+    },
+    refreshDashboard: function () {
+      const self = this;
+      setTimeout(function () {
+        document.querySelector('#heart-count').value = self.hearts.size;
+        self.refreshDashboard();
+      }, 100);
+    },
+    spawnHeart: function () {
+      const self = this;
+      const keyHeart = 'h' + new Date().getTime()
+      let rotation = Math.floor(Math.random() * 360);
+      let duration = Math.floor(Math.random() * (this.heartLifetime.max - this.heartLifetime.min + 1)) + this.heartLifetime.min;
+      let heartObj = {
+        id: keyHeart,
+        html: null,
+        angle: rotation,
+        rotation: rotation,
+        scale: Math.random() + 1,
+        offset: (Math.floor(Math.random() * self.basicSize - 100) + 100),
+        duration: duration,
+        durationLeft: duration,
+        generate: function () {
+          let ele = document.createElement('div');
+          let randomTpl = Math.floor(Math.random() * self.allowHeartList.length);
+          ele.innerHTML = `<div class="small-heart">${self.heartTpl[self.allowHeartList[randomTpl]]}</div>`;
+          ele.firstChild.style.setProperty('--duration', `${this.duration}s`);
+          ele.firstChild.style.setProperty('--offset', `${this.offset}px`);
+          ele.firstChild.style.setProperty('--angle', `${this.angle}deg`);
+          ele.firstChild.style.setProperty('--rotate', `${this.rotation}deg`);
+          ele.firstChild.style.setProperty('--scale', `${this.scale}`);
+          this.html = ele.firstChild;
+          document.querySelector('.heart-particles').append(this.html);
+          return this;
+        },
+        destroy: function () {
+          this.html.remove();
+          self.hearts.delete(this.id);
+        },
+        live: function () {
+          const heartSelf = this;
+          setTimeout(function () {
+            heartSelf.durationLeft -= (100 / 1000);
+            if (heartSelf.durationLeft < 0) {
+              heartSelf.destroy();
+            } else {
+              heartSelf.live();
+            }
+          }, 100);
+          return this;
+        }
+      }
+      self.hearts.set(keyHeart, heartObj);
+      heartObj.generate().live();
+    }
+  };
+  HeartApp.init();
+</script>
