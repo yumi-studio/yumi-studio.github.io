@@ -35,7 +35,7 @@
     --heart-size: 15px;
     --heart-front-rotate: 0deg;
     --heart-front-size: 0px;
-    --base-color: #ff00bc;
+    --base-color: #ff2ec8;
     --heart-clip-path: 'none';
     margin: 0;
     padding: 0;
@@ -363,7 +363,7 @@
     basicSize: 0,
     heartLifetime: {
       min: 4,
-      max: 10
+      max: 6
     },
     init: function () {
       const self = this;
@@ -383,8 +383,6 @@
       });
 
       // Convert Heart front matrix
-      const maskW = document.querySelector('.heart-mask').offsetWidth;
-      const maskH = document.querySelector('.heart-mask').offsetHeight;
       let minX = 100;
       let maxX = 0;
       let minY = 100;
@@ -422,6 +420,8 @@
       self.live();
       self.initDashboard();
       self.refreshDashboard();
+      var audio = new Audio('audio_file.mp3');
+      audio.play();
     },
     initDashboard: function () {
       const self = this;
@@ -476,8 +476,8 @@
         html: null,
         angle: rotation,
         rotation: rotation,
-        scale: 0.5 + Math.random(),
-        offset: (Math.floor(Math.random() * (self.basicSize * 0.5) - Math.floor(self.basicSize * 0.25)) + Math.floor(self.basicSize * 0.25)),
+        scale: 0.75 + Math.random(),
+        offset: (Math.floor(Math.random() * (self.basicSize * 0.75) - Math.floor(self.basicSize * 0.25)) + Math.floor(self.basicSize * 0.25)),
         duration: duration,
         durationLeft: duration,
         generate: function () {
