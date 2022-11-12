@@ -15,11 +15,10 @@
                 <path d="M17.516 3c2.382 0 4.487 1.564 4.487 4.712 0 4.963-6.528 8.297-10.003 11.935-3.475-3.638-10.002-6.971-10.002-11.934 0-3.055 2.008-4.713 4.487-4.713 3.18 0 4.846 3.644 5.515 5.312.667-1.666 2.333-5.312 5.516-5.312zm0-2c-2.174 0-4.346 1.062-5.516 3.419-1.17-2.357-3.342-3.419-5.515-3.419-3.403 0-6.484 2.39-6.484 6.689 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-4.586-3.414-6.689-6.484-6.689z"/>
             </svg>
         </div>
-        <div class="heart-particles heart-particles-beat">
+        <div class="heart-mask">
+            <div class="heart-particles">
 
-        </div>
-        <div class="heart-bg">
-
+            </div>
         </div>
     </div>
     <div class="dashboard">
@@ -35,12 +34,23 @@
   body {
     --heart-size: 15px;
     --heart-front-rotate: 0deg;
-    background: black;
+    --heart-front-size: 0px;
+    --base-color: #ff00bc;
+    --heart-clip-path: 'none';
     margin: 0;
     padding: 0;
+    background: black;
+  }
+
+  .hidden {
+    display: none !important;
   }
 
   [purpose='page-wrap'] {
+    padding: 0;
+  }
+
+  .container-fluid {
     padding: 0;
   }
 
@@ -60,11 +70,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 0;
+    width: var(--heart-front-size);
     height: auto;
-    z-index: 3;
-    filter: drop-shadow(0px 0px 30px hotpink);
-    animation: heart-front-beat-2 .3s ease-in-out infinite alternate;
+    z-index: 6;
+    filter: drop-shadow(0px 0px 30px var(--base-color));
+    animation: heart-front-beat .3s ease-in-out infinite alternate;
     transform-origin: center;
   }
 
@@ -74,35 +84,52 @@
   }
 
   .heart-front-outline {
+    width: var(--heart-front-size);
     transform-origin: center;
     animation: heart-outline-fade ease-out 0.6s infinite forwards;
-    opacity: 1;
+    opacity: 0.5;
     transform: translate(-50%, -50%) scale(1);
-    fill: hotpink;
-    z-index: 1;
+    fill: var(--base-color);
+    z-index: 5;
   }
 
   @keyframes heart-outline-fade {
+    to {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.6);
+    }
+  }
+
+  .heart-front-outline-2 {
+    width: var(--heart-front-size);
+    transform-origin: center;
+    animation: heart-outline-fade-2 ease-out 0.6s infinite forwards;
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1);
+    fill: var(--base-color);
+    z-index: 4;
+  }
+
+  @keyframes heart-outline-fade-2 {
     to {
       opacity: 0;
       transform: translate(-50%, -50%) scale(1.8);
     }
   }
 
-  .heart-front-outline-2 {
+  .heart-mask {
+    background: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--heart-front-size);
+    height: auto;
+    filter: drop-shadow(0px 0px 30px var(--base-color));
+    animation: heart-front-beat .3s ease-in-out infinite alternate;
     transform-origin: center;
-    animation: heart-outline-fade-2 ease-out 0.6s infinite forwards;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-    fill: rgba(255, 105, 180, 0.5);
     z-index: 1;
-  }
-
-  @keyframes heart-outline-fade-2 {
-    to {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(2);
-    }
+    clip-path: var(--heart-clip-path);
   }
 
   .heart-particles {
@@ -112,25 +139,13 @@
     top: 50%;
     left: 50%;
     transform: translate(calc((var(--heart-size) / -2)), calc(var(--heart-size) / -2));
-    fill: hotpink;
+    fill: var(--base-color);
     z-index: 1;
-    animation: heart-particles-beat .3s infinite alternate;
+    /*animation: heart-particles-beat .3s infinite alternate;*/
     transform-origin: center;
   }
 
   @keyframes heart-front-beat {
-    0% {
-      transform: translate(-50%, -50%) rotate(30deg) scale(1.4);
-    }
-    50% {
-      transform: translate(-50%, -50%) rotate(0deg) scale(1);
-    }
-    100% {
-      transform: translate(-50%, -50%) rotate(-30deg) scale(1.4);
-    }
-  }
-
-  @keyframes heart-front-beat-2 {
     to {
       transform: translate(-50%, -50%) rotate(0) scale(1.4);
     }
@@ -161,6 +176,7 @@
 
     opacity: 1;
     transform: rotate(var(--angle)) translate(0, 0) scale(var(--scale)) rotate(0);
+
   }
 
   .small-heart svg {
@@ -195,6 +211,7 @@
     transform: translate(-50%, 100%);
     transition: ease 0.25s;
     padding: 15px;
+    z-index: 999;
   }
 
   .dashboard.active {
@@ -224,7 +241,7 @@
   }
 
   .heart-option.active {
-    fill: hotpink;
+    fill: var(--base-color);
   }
 </style>
 <script type="text/javascript">
@@ -239,12 +256,114 @@
       `<svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m11.262 2.306c.196-.196.461-.306.738-.306s.542.11.738.306c1.917 1.917 7.039 7.039 8.956 8.956.196.196.306.461.306.738s-.11.542-.306.738c-1.917 1.917-7.039 7.039-8.956 8.956-.196.196-.461.306-.738.306s-.542-.11-.738-.306c-1.917-1.917-7.039-7.039-8.956-8.956-.196-.196-.306-.461-.306-.738s.11-.542.306-.738c1.917-1.917 7.039-7.039 8.956-8.956zm-7.573 9.694 8.311 8.311 8.311-8.311-8.311-8.311z" fill-rule="nonzero"/></svg>`,
     ],
     allowHeartList: [],
+    frontHeartVectorMatrix: [
+      '12 4.419000148773193',
+      '11.627447128295898 3.764559745788574',
+      '11.180187225341797 3.1587765216827393',
+      '10.661539077758789 2.612910032272339',
+      '10.078060150146484 2.136990547180176',
+      '9.438959121704102 1.7388633489608765',
+      '8.755045890808105 1.423829436302185',
+      '8.037717819213867 1.1947768926620483',
+      '7.2982048988342285 1.0527219772338867',
+      '6.547182559967041 0.997471034526825',
+      '5.794744491577148 1.0281789302825928',
+      '5.050587177276611 1.1436786651611328',
+      '4.324286460876465 1.3426412343978882',
+      '3.6255478858947754 1.6234296560287476',
+      '2.96435809135437 1.9838128089904785',
+      '2.350904941558838 2.420501708984375',
+      '1.7952238321304321 2.92864990234375',
+      '1.306488037109375 3.501464366912842',
+      '0.8921157717704773 4.130187034606934',
+      '0.5569502115249634 4.804505825042725',
+      '0.30274146795272827 5.51336145401001',
+      '0.12817934155464172 6.2459635734558105',
+      '0.0294918492436409 6.9926347732543945',
+      '0.0012051640078425407 7.745319843292236',
+      '0.04241282865405083 8.497371673583984',
+      '0.1558096706867218 9.241961479187012',
+      '0.3397267460823059 9.972349166870117',
+      '0.5898013114929199 10.682840347290039',
+      '0.8997108936309814 11.36938762664795',
+      '1.2621047496795654 12.02978801727295',
+      '1.6694694757461548 12.663480758666992',
+      '2.11472225189209 13.271188735961914',
+      '2.591491460800171 13.854534149169922',
+      '3.094257354736328 14.415656089782715',
+      '3.6183197498321533 14.956962585449219',
+      '4.159604549407959 15.481064796447754',
+      '4.714685916900635 15.990543365478516',
+      '5.280572414398193 16.48801040649414',
+      '5.854594707489014 16.9760684967041',
+      '6.434314250946045 17.457353591918945',
+      '7.0173258781433105 17.934648513793945',
+      '7.601271152496338 18.410804748535156',
+      '8.183687210083008 18.888830184936523',
+      '8.761627197265625 19.372243881225586',
+      '9.331611633300781 19.86500358581543',
+      '9.889195442199707 20.37172508239746',
+      '10.428339958190918 20.897993087768555',
+      '10.940386772155762 21.450597763061523',
+      '11.412507057189941 22.037534713745117',
+      '11.825124740600586 22.667482376098633',
+      '12.17582893371582 22.665828704833984',
+      '12.588635444641113 22.035999298095703',
+      '13.060894012451172 21.449174880981445',
+      '13.573044776916504 20.89667510986328',
+      '14.112245559692383 20.3704776763916',
+      '14.66988754272461 19.863811492919922',
+      '15.239912986755371 19.371103286743164',
+      '15.817891120910645 18.887723922729492',
+      '16.400327682495117 18.40973472595215',
+      '16.98429298400879 17.933605194091797',
+      '17.567323684692383 17.456327438354492',
+      '18.147048950195312 16.97504997253418',
+      '18.72108268737793 16.487009048461914',
+      '19.286970138549805 15.98954963684082',
+      '19.842052459716797 15.480067253112793',
+      '20.383333206176758 14.955958366394043',
+      '20.90736198425293 14.414619445800781',
+      '21.41013526916504 13.853506088256836',
+      '21.88688087463379 13.270145416259766',
+      '22.33209991455078 12.662410736083984',
+      '22.73942756652832 12.028688430786133',
+      '23.101762771606445 11.368263244628906',
+      '23.411605834960938 10.681680679321289',
+      '23.661598205566406 9.971158981323242',
+      '23.845415115356445 9.24074935913086',
+      '23.95869255065918 8.496143341064453',
+      '23.999786376953125 7.744091510772705',
+      '23.971345901489258 6.991413116455078',
+      '23.872406005859375 6.244777679443359',
+      '23.697534561157227 5.512255668640137',
+      '23.442996978759766 4.803523540496826',
+      '23.107498168945312 4.12937068939209',
+      '22.692874908447266 3.5008161067962646',
+      '22.20395278930664 2.928161144256592',
+      '21.648176193237305 2.420114040374756',
+      '21.034713745117188 1.9834439754486084',
+      '20.3735408782959 1.6230202913284302',
+      '19.67485237121582 1.3421080112457275',
+      '18.948583602905273 1.1430151462554932',
+      '18.204458236694336 1.0273576974868774',
+      '17.4520320892334 0.9965127110481262',
+      '16.701005935668945 1.0517064332962036',
+      '15.961504936218262 1.19377863407135',
+      '15.244206428527832 1.4229216575622559',
+      '14.56037712097168 1.738146185874939',
+      '13.921417236328125 2.1364810466766357',
+      '13.338125228881836 2.6126341819763184',
+      '12.819656372070312 3.158667802810669',
+      '12.372542381286621 3.7645530700683594',
+      '12 4.419000148773193',
+    ],
     spawnRate: 100,
     spawnCounter: 0,
     basicSize: 0,
     heartLifetime: {
       min: 4,
-      max: 6
+      max: 10
     },
     init: function () {
       const self = this;
@@ -252,14 +371,54 @@
       const screenH = window.innerHeight;
       self.basicSize = screenW > screenH ? screenH : screenW;
       const heartFrontSize = Math.floor(self.basicSize * 0.3333333);
-      document.querySelector('.heart-front').style.width = heartFrontSize + "px";
-      document.querySelector('.heart-front-outline').style.width = heartFrontSize + "px";
-      document.querySelector('.heart-front-outline-2').style.width = heartFrontSize + "px";
-      document.querySelector('.heart-bg').style.width = (heartFrontSize / 2) + "px";
-      document.querySelector('.heart-bg').style.height = (heartFrontSize / 2) + "px";
-      document.querySelector('.heart-front').addEventListener('click', function (e) {
-        document.querySelector('.dashboard').classList.toggle('active');
+      const heartFront = document.querySelector('.heart-front');
+      const heartFrontOutline = document.querySelector('.heart-front-outline');
+      const heartFrontOutline2 = document.querySelector('.heart-front-outline-2');
+      const dashboard = document.querySelector('.dashboard');
+      const body = document.querySelector('body');
+      body.style.setProperty('--heart-size', (self.basicSize / 40) + 'px');
+      body.style.setProperty('--heart-front-size', heartFrontSize + 'px');
+      heartFront.addEventListener('click', function (e) {
+        dashboard.classList.toggle('active');
       });
+
+      // Convert Heart front matrix
+      const maskW = document.querySelector('.heart-mask').offsetWidth;
+      const maskH = document.querySelector('.heart-mask').offsetHeight;
+      let minX = 100;
+      let maxX = 0;
+      let minY = 100;
+      let maxY = 0;
+      for (let i = 0; i < self.frontHeartVectorMatrix.length; i++) {
+        let vector = self.frontHeartVectorMatrix[i].split(' ');
+        if (vector[0] < minX) {
+          minX = vector[0] * 1;
+        }
+        if (vector[0] > maxX) {
+          maxX = vector[0] * 1;
+        }
+        if (vector[1] < minY) {
+          minY = vector[1] * 1;
+        }
+        if (vector[1] > maxY) {
+          maxY = vector[1] * 1;
+        }
+      }
+      let deltaX = 50 - (maxX / 2);
+      let deltaY = 50 - (maxY / 2);
+      let lastX = 0;
+      let lastY = 0;
+      for (let i = 0; i < self.frontHeartVectorMatrix.length; i++) {
+        let vector = self.frontHeartVectorMatrix[i].split(' ');
+        let x = (vector[0] * 1 + deltaX);
+        let y = (vector[1] * 1 + deltaY);
+        self.frontHeartVectorMatrix[i] = ` ${x}% ${y}%`;
+        lastX = x;
+        lastY = y;
+      }
+      document.querySelector('.heart-mask').style.width = document.querySelector('.heart-mask').style.height = self.basicSize + 'px';
+      document.querySelector('body').style.setProperty('--heart-clip-path',`polygon(evenodd,${self.frontHeartVectorMatrix.join(',')},${lastX}% 100%, 100% 100%, 100% 0%, 0% 0%, 0% 100%, ${lastX}% 100%)`);
+
       self.live();
       self.initDashboard();
       self.refreshDashboard();
@@ -270,6 +429,8 @@
         let ele = document.createElement('div');
         ele.classList.add('heart-option');
         ele.innerHTML = value;
+        self.allowHeartList.push(index);
+        ele.classList.add('active');
         ele.addEventListener('click', function (e) {
           let found = self.allowHeartList.indexOf(index);
           if (found > -1) {
@@ -279,10 +440,10 @@
             self.allowHeartList.push(index);
             ele.classList.add('active');
           }
-          console.log(index);
-        })
+        });
         document.querySelector('.heart-options').append(ele);
       });
+
     },
     live: function () {
       const self = this;
@@ -307,7 +468,7 @@
     },
     spawnHeart: function () {
       const self = this;
-      const keyHeart = 'h' + new Date().getTime()
+      const keyHeart = 'h' + new Date().getTime();
       let rotation = Math.floor(Math.random() * 360);
       let duration = Math.floor(Math.random() * (this.heartLifetime.max - this.heartLifetime.min + 1)) + this.heartLifetime.min;
       let heartObj = {
@@ -315,8 +476,8 @@
         html: null,
         angle: rotation,
         rotation: rotation,
-        scale: Math.random() + 1,
-        offset: (Math.floor(Math.random() * self.basicSize - 100) + 100),
+        scale: 0.5 + Math.random(),
+        offset: (Math.floor(Math.random() * (self.basicSize * 0.5) - Math.floor(self.basicSize * 0.25)) + Math.floor(self.basicSize * 0.25)),
         duration: duration,
         durationLeft: duration,
         generate: function () {
@@ -348,7 +509,7 @@
           }, 100);
           return this;
         }
-      }
+      };
       self.hearts.set(keyHeart, heartObj);
       heartObj.generate().live();
     }
